@@ -21,20 +21,17 @@
             id="searchInput"
             placeholder="Search K-drama..."
             >
-
         <select id="genreFilter">
           <option value="all">All genres</option>
         </select>
-
         <select id="sortSelect">
           <option value="popular">Sort by popularity</option>
           <option value="rating">Sort by rating</option>
           <option value="year">Sort by release year</option>
         </select>
-
         <button id="themeToggle">Switch theme</button>
-
         </section>
+
         <section class="stats"> 
           <article>
             <h2 id="totalCount">0</h2>
@@ -48,8 +45,12 @@
             <h2 id="favoritesCount">0</h2>
             <p>Favorites</p>
           </article>
-
         </section>
+
+        <section id="dramaGrid" class="drama-grid">
+         <p>Loading K-dramas...</p>
+        </section>
+
       </main>
     </div>
     <script type="module" src="/src/main.js"></script>
