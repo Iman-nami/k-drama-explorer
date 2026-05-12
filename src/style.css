@@ -68,3 +68,9 @@ button {
   border-radius: 16px;
   text-align: center;
 }
+
+.stats h2 {
+  margin: 0;
+  font-size: 2rem;
+  color: #fca5a5;
+}
