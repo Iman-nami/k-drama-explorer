@@ -79,3 +79,9 @@ button {
   margin-top: 0.5rem;
   color: #d1d5db;
 }
+
+.drama-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
