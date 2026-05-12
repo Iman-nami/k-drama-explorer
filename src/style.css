@@ -7,4 +7,22 @@ body {
   font-family: Arial, sans-serif;
   background: #111827;
   color: #f9fafb;
+
+}
+
+.header{
+  text-align: center;
+  padding: 3rem 1 rem; 
+  background: linear-gradient(135deg, #111827, #7f1d1d); 
+}
+
+.header h1{
+  font-size: 3 rem; 
+  margin: 0.5rem 0; 
+}
+
+.subtitle{
+  max-width: 600px;
+  margin: 0 auto;
+  color:#d1d5db
 }
