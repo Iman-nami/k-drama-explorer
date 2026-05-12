@@ -22,7 +22,17 @@ async function fetchKDramas() {
 
     const data = await response.json();
 
-    console.log(data.results);
+dramaGrid.innerHTML = data.results
+  .slice(0, 20)
+  .map((drama) => {
+    return `
+      <article class="drama-card">
+        <h2>${drama.name}</h2>
+      </article>
+    `;
+  })
+  .join('');
+
   } catch (error) {
     console.error(error);
   }
