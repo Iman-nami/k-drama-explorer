@@ -26,3 +26,8 @@ body {
   margin: 0 auto;
   color:#d1d5db
 }
+
+.container {
+  width: min(1200px, 90%);
+  margin: 2rem auto;
+}
