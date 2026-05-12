@@ -74,3 +74,8 @@ button {
   font-size: 2rem;
   color: #fca5a5;
 }
+
+.stats p {
+  margin-top: 0.5rem;
+  color: #d1d5db;
+}
