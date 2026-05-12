@@ -61,3 +61,10 @@ button {
   gap: 1rem;
   margin-bottom: 2rem;
 }
+
+.stats article {
+  background: #1f2937;
+  padding: 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+}
