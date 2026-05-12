@@ -31,3 +31,26 @@ body {
   width: min(1200px, 90%);
   margin: 2rem auto;
 }
+
+.controls {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+input,
+select,
+button {
+  padding: 0.9rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+}
+
+button {
+  cursor: pointer;
+  background: #dc2626;
+  color: white;
+  font-weight: bold;
+}
