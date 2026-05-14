@@ -41,7 +41,9 @@ return `
       ? drama.overview.substring(0, 120) + '...'
       : 'Description unavailable.'
     }
-</p>
+    </p>
+    <button class="favorite-btn">♡ Add to favorites</button>
+
   </article>
 `;
   })
