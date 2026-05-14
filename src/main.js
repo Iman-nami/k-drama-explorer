@@ -25,11 +25,15 @@ async function fetchKDramas() {
 dramaGrid.innerHTML = data.results
   .slice(0, 20)
   .map((drama) => {
-    return `
-      <article class="drama-card">
-        <h2>${drama.name}</h2>
-      </article>
-    `;
+    const poster = drama.poster_path
+  ? `${IMAGE_URL}${drama.poster_path}`
+  : '';
+return `
+  <article class="drama-card">
+    <img src="${poster}" alt="${drama.name} poster">
+    <h2>${drama.name}</h2>
+  </article>
+`;
   })
   .join('');
 
@@ -37,3 +41,5 @@ dramaGrid.innerHTML = data.results
     console.error(error);
   }
 }
+
+fetchKDramas();
