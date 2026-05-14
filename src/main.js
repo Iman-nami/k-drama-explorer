@@ -23,6 +23,14 @@ async function fetchKDramas() {
     const data = await response.json();
 
 totalCount.textContent = data.results.length;
+const totalRating = data.results.reduce((sum, drama) => {
+  return sum + drama.vote_average;
+}, 0);
+
+const average = totalRating / data.results.length;
+
+averageRating.textContent = average.toFixed(1);
+
 dramaGrid.innerHTML = data.results
   .slice(0, 20)
   .map((drama) => {
