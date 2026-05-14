@@ -120,3 +120,18 @@ button {
   padding: 1rem;
   font-size: 1.1rem;
 }
+
+.drama-card h2,
+.drama-card p {
+  padding: 0 1rem;
+}
+
+.drama-card p {
+  font-size: 0.9rem;
+  color: #d1d5db;
+}
+
+.favorite-btn {
+  width: calc(100% - 2rem);
+  margin: 1rem;
+}
