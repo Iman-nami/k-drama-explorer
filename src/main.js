@@ -22,6 +22,7 @@ async function fetchKDramas() {
 
     const data = await response.json();
 
+totalCount.textContent = data.results.length;
 dramaGrid.innerHTML = data.results
   .slice(0, 20)
   .map((drama) => {
