@@ -33,6 +33,7 @@ return `
     <img src="${poster}" alt="${drama.name} poster">
     <h2>${drama.name}</h2>
     <p>Year: ${drama.first_air_date ? drama.first_air_date.split('-')[0] : 'Unknown'}</p>
+    <p>Rating: ${drama.vote_average.toFixed(1)}</p>
   </article>
 `;
   })
