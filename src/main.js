@@ -113,6 +113,23 @@ searchInput.addEventListener('input', () => {
   updateStats(filteredDramas);
 });
 
+genreFilter.addEventListener('change', () => {
+  const selectedGenre = genreFilter.value;
+
+  if (selectedGenre === 'all') {
+    displayDramas(allDramas);
+    updateStats(allDramas);
+    return;
+  }
+
+  const filteredDramas = allDramas.filter((drama) => {
+    return drama.genre_ids.includes(Number(selectedGenre));
+  });
+
+  displayDramas(filteredDramas);
+  updateStats(filteredDramas);
+});
+
 fetchKDramas();
 
 
