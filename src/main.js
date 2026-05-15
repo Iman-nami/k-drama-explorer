@@ -9,6 +9,7 @@ const dramaGrid = document.querySelector('#dramaGrid');
 const totalCount = document.querySelector('#totalCount');
 const averageRating = document.querySelector('#averageRating');
 const favoritesCount = document.querySelector('#favoritesCount');
+const searchInput = document.querySelector('#searchInput');
 
 let allDramas = [];
 
@@ -77,6 +78,17 @@ async function fetchKDramas() {
     console.error(error);
   }
 }
+
+searchInput.addEventListener('input', () => {
+  const searchValue = searchInput.value.toLowerCase();
+
+  const filteredDramas = allDramas.filter((drama) => {
+    return drama.name.toLowerCase().includes(searchValue);
+  });
+
+  displayDramas(filteredDramas);
+  updateStats(filteredDramas);
+});
 
 fetchKDramas();
 
