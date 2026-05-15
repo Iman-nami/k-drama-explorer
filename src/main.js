@@ -28,8 +28,7 @@ let allDramas = [];
 
 function displayDramas(dramas) {
   dramaGrid.innerHTML = dramas
-    .slice(0, 20)
-    .map((drama) => {
+      .map((drama) => {
       const poster = drama.poster_path
         ? `${IMAGE_URL}${drama.poster_path}`
         : '';
@@ -71,18 +70,51 @@ function updateStats(dramas) {
 
 async function fetchKDramas() {
   try {
-    const response = await fetch(
-      `${BASE_URL}/search/tv?api_key=${API_KEY}&query=korean&page=1`
-    );
+    const firstResponse = await fetch(
+  `${BASE_URL}/search/tv?api_key=${API_KEY}&query=korean&page=1`
+);
 
+if (!firstResponse.ok) {
+  throw new Error('Failed to fetch data');
+}
+
+const firstData = await firstResponse.json();
+
+const totalPages = firstData.total_pages;
+
+const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+const responses = await Promise.all(
+  pages.map((page) => {
+    return fetch(
+      `${BASE_URL}/search/tv?api_key=${API_KEY}&query=korean&page=${page}`
+    );
+  })
+);
+
+const data = await Promise.all(
+  responses.map((response) => {
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
 
-    const data = await response.json();
+    return response.json();
+  })
+);
 
-    allDramas = data.results;
-
+data.forEach((page) => {
+  page.results.forEach((drama) => {
+    if (
+      Object.values({
+        poster: drama.poster_path,
+        year: drama.first_air_date,
+        description: drama.overview
+      }).every(Boolean)
+    ) {
+      allDramas.push(drama);
+    }
+  });
+});
    const genres = [...new Set(allDramas.map((drama) => drama.genre_ids).flat())];
 
   genres
