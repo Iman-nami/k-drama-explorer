@@ -162,6 +162,30 @@ genreFilter.addEventListener('change', () => {
   updateStats(filteredDramas);
 });
 
+const sortSelect = document.querySelector('#sortSelect');
+
+sortSelect.addEventListener('change', () => {
+  let sortedDramas = [...allDramas];
+
+  if (sortSelect.value === 'rating') {
+    sortedDramas.sort((a, b) => b.vote_average - a.vote_average);
+  }
+
+  if (sortSelect.value === 'year') {
+    sortedDramas.sort(
+      (a, b) =>
+        parseInt(b.first_air_date) - parseInt(a.first_air_date)
+    );
+  }
+
+  if (sortSelect.value === 'popular') {
+    sortedDramas.sort((a, b) => b.popularity - a.popularity);
+  }
+
+  displayDramas(sortedDramas);
+  updateStats(sortedDramas);
+});
+
 fetchKDramas();
 
 
