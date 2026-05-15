@@ -115,6 +115,9 @@ data.forEach((page) => {
     }
   });
 });
+allDramas = allDramas.filter((drama, index, array) => {
+  return index === array.findIndex((item) => item.id === drama.id);
+});
    const genres = [...new Set(allDramas.map((drama) => drama.genre_ids).flat())];
 
   genres
@@ -134,58 +137,50 @@ data.forEach((page) => {
   }
 }
 
-searchInput.addEventListener('input', () => {
-  const searchValue = searchInput.value.toLowerCase();
+const sortSelect = document.querySelector('#sortSelect');
 
-  const filteredDramas = allDramas.filter((drama) => {
+function updateDramaList() {
+  const searchValue = searchInput.value.toLowerCase();
+  const selectedGenre = genreFilter.value;
+  const selectedSort = sortSelect.value;
+
+  let filteredDramas = [...allDramas];
+
+  filteredDramas = filteredDramas.filter((drama) => {
     return drama.name.toLowerCase().includes(searchValue);
   });
 
+  if (selectedGenre !== 'all') {
+    filteredDramas = filteredDramas.filter((drama) => {
+      return drama.genre_ids.includes(Number(selectedGenre));
+    });
+  }
+
+  if (selectedSort === 'rating') {
+    filteredDramas.sort((a, b) => b.vote_average - a.vote_average);
+  }
+
+  if (selectedSort === 'year') {
+    filteredDramas.sort((a, b) => {
+      return parseInt(b.first_air_date) - parseInt(a.first_air_date);
+    });
+  }
+
+  if (selectedSort === 'popular') {
+    filteredDramas.sort((a, b) => b.popularity - a.popularity);
+  }
+
   displayDramas(filteredDramas);
   updateStats(filteredDramas);
-});
+}
 
-genreFilter.addEventListener('change', () => {
-  const selectedGenre = genreFilter.value;
+searchInput.addEventListener('input', updateDramaList);
+genreFilter.addEventListener('change', updateDramaList);
+sortSelect.addEventListener('change', updateDramaList);
 
-  if (selectedGenre === 'all') {
-    displayDramas(allDramas);
-    updateStats(allDramas);
-    return;
-  }
 
-  const filteredDramas = allDramas.filter((drama) => {
-    return drama.genre_ids.includes(Number(selectedGenre));
-  });
-
-  displayDramas(filteredDramas);
-  updateStats(filteredDramas);
-});
-
-const sortSelect = document.querySelector('#sortSelect');
-
-sortSelect.addEventListener('change', () => {
-  let sortedDramas = [...allDramas];
-
-  if (sortSelect.value === 'rating') {
-    sortedDramas.sort((a, b) => b.vote_average - a.vote_average);
-  }
-
-  if (sortSelect.value === 'year') {
-    sortedDramas.sort(
-      (a, b) =>
-        parseInt(b.first_air_date) - parseInt(a.first_air_date)
-    );
-  }
-
-  if (sortSelect.value === 'popular') {
-    sortedDramas.sort((a, b) => b.popularity - a.popularity);
-  }
-
-  displayDramas(sortedDramas);
-  updateStats(sortedDramas);
-});
 
 fetchKDramas();
+
 
 
