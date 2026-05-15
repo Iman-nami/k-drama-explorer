@@ -10,6 +10,17 @@ const totalCount = document.querySelector('#totalCount');
 const averageRating = document.querySelector('#averageRating');
 const favoritesCount = document.querySelector('#favoritesCount');
 const searchInput = document.querySelector('#searchInput');
+const genreFilter = document.querySelector('#genreFilter');
+const genreMap = {
+  18: 'Drama',
+  35: 'Comedy',
+  10749: 'Romance',
+  9648: 'Mystery',
+  80: 'Crime',
+  10759: 'Action',
+  10765: 'Sci-Fi',
+};
+
 
 let allDramas = [];
 
@@ -71,6 +82,18 @@ async function fetchKDramas() {
     const data = await response.json();
 
     allDramas = data.results;
+
+   const genres = [...new Set(allDramas.map((drama) => drama.genre_ids).flat())];
+
+  genres
+  .filter((genre) => genreMap[genre])
+  .forEach((genre) => {
+  genreFilter.innerHTML += `
+    <option value="${genre}">
+      ${genreMap[genre] || 'Other'}
+    </option>
+  `;
+});
 
     displayDramas(allDramas);
     updateStats(allDramas);
