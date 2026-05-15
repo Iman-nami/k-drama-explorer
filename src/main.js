@@ -10,6 +10,53 @@ const totalCount = document.querySelector('#totalCount');
 const averageRating = document.querySelector('#averageRating');
 const favoritesCount = document.querySelector('#favoritesCount');
 
+let allDramas = [];
+
+
+
+function displayDramas(dramas) {
+  dramaGrid.innerHTML = dramas
+    .slice(0, 20)
+    .map((drama) => {
+      const poster = drama.poster_path
+        ? `${IMAGE_URL}${drama.poster_path}`
+        : '';
+
+      return `
+        <article class="drama-card">
+          <img src="${poster}" alt="${drama.name} poster">
+          <h2>${drama.name}</h2>
+          <p>Year: ${drama.first_air_date ? drama.first_air_date.split('-')[0] : 'Unknown'}</p>
+          <p>Rating: ${drama.vote_average.toFixed(1)}</p>
+          <p>Popularity: ${Math.round(drama.popularity)}</p>
+          <p>
+            ${
+              drama.overview
+                ? drama.overview.substring(0, 120) + '...'
+                : 'Description unavailable.'
+            }
+          </p>
+          <button class="favorite-btn">♡ Add to favorites</button>
+        </article>
+      `;
+    })
+    .join('');
+}
+
+
+function updateStats(dramas) {
+  totalCount.textContent = dramas.length;
+
+  const totalRating = dramas.reduce((sum, drama) => {
+    return sum + drama.vote_average;
+  }, 0);
+
+  const average = totalRating / dramas.length;
+
+  averageRating.textContent = average.toFixed(1);
+}
+
+
 async function fetchKDramas() {
   try {
     const response = await fetch(
@@ -22,45 +69,15 @@ async function fetchKDramas() {
 
     const data = await response.json();
 
-totalCount.textContent = data.results.length;
-const totalRating = data.results.reduce((sum, drama) => {
-  return sum + drama.vote_average;
-}, 0);
+    allDramas = data.results;
 
-const average = totalRating / data.results.length;
-
-averageRating.textContent = average.toFixed(1);
-
-dramaGrid.innerHTML = data.results
-  .slice(0, 20)
-  .map((drama) => {
-    const poster = drama.poster_path
-  ? `${IMAGE_URL}${drama.poster_path}`
-  : '';
-return `
-  <article class="drama-card">
-    <img src="${poster}" alt="${drama.name} poster">
-    <h2>${drama.name}</h2>
-    <p>Year: ${drama.first_air_date ? drama.first_air_date.split('-')[0] : 'Unknown'}</p>
-    <p>Rating: ${drama.vote_average.toFixed(1)}</p>
-    <p>Popularity: ${Math.round(drama.popularity)}</p>
-    <p>
-    ${
-    drama.overview
-      ? drama.overview.substring(0, 120) + '...'
-      : 'Description unavailable.'
-    }
-    </p>
-    <button class="favorite-btn">♡ Add to favorites</button>
-
-  </article>
-`;
-  })
-  .join('');
-
+    displayDramas(allDramas);
+    updateStats(allDramas);
   } catch (error) {
     console.error(error);
   }
 }
 
 fetchKDramas();
+
+
